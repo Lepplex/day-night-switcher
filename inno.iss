@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Day and Night Switcher"
-#define MyAppVersion "1"
+#define MyAppVersion "v1"
 #define MyAppPublisher "Lepplex"
 #define MyAppURL "https://github.com/Lepplex/light-dark-switcher"
-#define MyAppExeName "app.exe"
+#define MyAppExeName "dnnswitcher.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -45,9 +45,8 @@ Source: "C:\Users\Alex\Documents\GitHub\light-dark-switcher\dist\app.exe"; DestD
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{commonstartup}\Day and Night Switcher"; Filename: "{app}\app.exe"
-
+; Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{commonstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -56,4 +55,4 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 Name: "autostart"; Description: "Automatically start Day and Night Switcher when Windows starts"; GroupDescription: "Additional tasks:"; Flags: checkedonce
 
 [UninstallRun]
-Filename: "{cmd}"; Parameters: "/C ""taskkill /im app.exe /f /t"
+Filename: "{cmd}"; Parameters: "/C ""taskkill /im dnnswitcher.exe /f /t"
