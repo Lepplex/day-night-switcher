@@ -7,9 +7,9 @@ import os
 import sys
 from pathlib import Path
 
-def startup_message():
+startup_message_enabled = True
+if startup_message_enabled == True:
     powershell_code = '''
-    $message = if ($new -eq 1) { "Light mode enabled." } else { "Dark mode enabled." }
 
     [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
     $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01)
@@ -18,6 +18,7 @@ def startup_message():
     $toast = [Windows.UI.Notifications.ToastNotification]::new($template)
     $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("Day/Night switcher")
     $notifier.Show($toast)
+
     '''
     subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
 
