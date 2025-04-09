@@ -87,11 +87,13 @@ def update_icon_and_menu(icon):
     if current_theme == "light":
         new_menu = Menu(
             MenuItem("Switch to dark mode", toggle_theme),
+            MenuItem("Disable/Enable startup notification...", disable_startup_message),
             MenuItem("Exit", quit_app)
         )
     else:
         new_menu = Menu(
             MenuItem("Switch to light mode", toggle_theme),
+            MenuItem("Disable/Enable startup notification...", disable_startup_message),
             MenuItem("Exit", quit_app)
         )
     icon.menu = new_menu
