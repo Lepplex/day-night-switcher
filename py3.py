@@ -6,9 +6,42 @@ import time
 import os
 import sys
 from pathlib import Path
+startup_message_status = 0
 
-startup_message_enabled = True
-if startup_message_enabled == True:
+def disable_startup_message():
+    global startup_message_status
+    if startup_message_status == 0:
+        startup_message_status = 1
+        powershell_code = '''
+
+        [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
+        $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01)
+        $text = $template.GetElementsByTagName("text")
+        $text.Item(0).AppendChild($template.CreateTextNode("Startup notification disabled.")) > $null
+        $toast = [Windows.UI.Notifications.ToastNotification]::new($template)
+        $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("Day/Night switcher")
+        $notifier.Show($toast)
+
+        '''
+        subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
+    else:
+        startup_message_status = 0
+        powershell_code = '''
+
+        [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
+        $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01)
+        $text = $template.GetElementsByTagName("text")
+        $text.Item(0).AppendChild($template.CreateTextNode("Startup notification enabled.")) > $null
+        $toast = [Windows.UI.Notifications.ToastNotification]::new($template)
+        $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("Day/Night switcher")
+        $notifier.Show($toast)
+
+        '''
+        subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
+
+
+
+if startup_message_status == 0:
     powershell_code = '''
 
     [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
@@ -103,11 +136,13 @@ def create_icon():
     if current_theme == "light":
         menu = Menu(
             MenuItem("Switch to dark mode", toggle_theme),
+            MenuItem("Disable/Enable startup notification...", disable_startup_message),
             MenuItem("Exit", quit_app)
         )
     else:
         menu = Menu(
             MenuItem("Switch to light mode", toggle_theme),
+            MenuItem("Disable/Enable startup notification...", disable_startup_message),
             MenuItem("Exit", quit_app)
         )
     return Icon("ThemeSwitcher", icon=get_icon_image(current_theme), menu=menu)
