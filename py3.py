@@ -7,6 +7,20 @@ import os
 import sys
 from pathlib import Path
 
+def startup_message():
+    powershell_code = '''
+    $message = if ($new -eq 1) { "Light mode enabled." } else { "Dark mode enabled." }
+
+    [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
+    $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01)
+    $text = $template.GetElementsByTagName("text")
+    $text.Item(0).AppendChild($template.CreateTextNode("D&N Switcher is running ! Take a look at the system tray.")) > $null
+    $toast = [Windows.UI.Notifications.ToastNotification]::new($template)
+    $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("Day/Night switcher")
+    $notifier.Show($toast)
+    '''
+    subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
+
 def resource_path(relative_path):
     """Retourne le chemin absolu vers le fichier, fonctionnant dans un environnement compilé ou non."""
     try:
