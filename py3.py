@@ -6,7 +6,11 @@ import time
 import os
 import sys
 from pathlib import Path
-file_path = 'dnnswitcher-config.txt'
+
+appdata_path = os.getenv('APPDATA')
+custom_directory = os.path.join(appdata_path, 'Day and Night Switcher')
+file_path = os.path.join(custom_directory, 'startup_message_status.txt')
+os.makedirs(custom_directory, exist_ok=True)
 
 def load_startup_message_status():
     # Vérifie si le fichier existe
