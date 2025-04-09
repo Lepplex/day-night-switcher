@@ -6,12 +6,30 @@ import time
 import os
 import sys
 from pathlib import Path
-startup_message_status = 0
+file_path = 'dnnswitcher-config.txt'
+
+def load_startup_message_status():
+    # Vérifie si le fichier existe
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            # Lit la valeur depuis le fichier et la convertit en entier
+            return int(file.read().strip())
+    # Si le fichier n'existe pas, retourne une valeur par défaut
+    return 0
+
+startup_message_status = load_startup_message_status()
+
+def save_startup_message_status(status):
+    with open(file_path, 'w') as file:
+        # Écrit la valeur dans le fichier
+        file.write(str(status))
 
 def disable_startup_message():
     global startup_message_status
     if startup_message_status == 0:
         startup_message_status = 1
+        print(startup_message_status)
+        save_startup_message_status(startup_message_status)
         powershell_code = '''
 
         [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
@@ -26,6 +44,8 @@ def disable_startup_message():
         subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
     else:
         startup_message_status = 0
+        print(startup_message_status)
+        save_startup_message_status(startup_message_status)
         powershell_code = '''
 
         [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
