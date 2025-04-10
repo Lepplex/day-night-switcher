@@ -124,7 +124,7 @@ def update_icon_and_menu(icon):
 
 # Fonction de basculement du thème et mise à jour de l'icône/menu
 def toggle_theme(icon, item):
-    # Code PowerShell qui inverse le thème puis affiche une notification
+    # Commande PowerShell qui inverse le thème puis affiche une notification
     powershell_code = '''
     $key = "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
     $current = Get-ItemPropertyValue -Path $key -Name SystemUsesLightTheme
