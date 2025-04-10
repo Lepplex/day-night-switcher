@@ -1,5 +1,5 @@
 # Day & Night Switcher
-Windows lacks of a Light/Dark mode button. So, i created mine !
+Windows lacks of a Light/Dark mode button. So, i created mine (with the help of AI) !
 
 Compiled with PyInstaller.
 
