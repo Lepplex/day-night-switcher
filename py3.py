@@ -107,7 +107,6 @@ def get_icon_image(theme):
 def update_icon_and_menu(icon):
     current_theme = get_current_theme()
     icon.icon = get_icon_image(current_theme)
-    # Met à jour le menu en fonction du thème courant
     if current_theme == "light":
         new_menu = Menu(
             MenuItem("Switch to dark mode", toggle_theme),
@@ -124,7 +123,6 @@ def update_icon_and_menu(icon):
 
 # Fonction de basculement du thème et mise à jour de l'icône/menu
 def toggle_theme(icon, item):
-    # Commande PowerShell qui inverse le thème puis affiche une notification
     powershell_code = '''
     $key = "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
     $current = Get-ItemPropertyValue -Path $key -Name SystemUsesLightTheme
@@ -147,9 +145,8 @@ def toggle_theme(icon, item):
     '''
     subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
     
-    # Laisser un petit délai pour que Windows applique le changement
-    time.sleep(2)
     # Mise à jour de l'icône et du menu
+    time.sleep(2)
     update_icon_and_menu(icon)
 
 # Quitter proprement l'application
