@@ -5,7 +5,7 @@
 Windows lacks of a Light/Dark mode button.<br>So, i created mine !<br>Work on Windows 11 as well as 10.
 
 **Features :**
-- Switch beetween light and dark mode !
+- Switch quickly beetween light and dark mode !
 - Starts with Windows (if installed with [the setup](https://github.com/Lepplex/day-night-switcher/releases))
 
 
