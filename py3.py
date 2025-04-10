@@ -45,7 +45,11 @@ def disable_startup_message():
         $notifier.Show($toast)
 
         '''
-        subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
+        subprocess.Popen(
+            ["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code],
+            creationflags=subprocess.CREATE_NO_WINDOW
+        )
+
     else:
         startup_message_status = 0
         print(startup_message_status)
@@ -61,8 +65,10 @@ def disable_startup_message():
         $notifier.Show($toast)
 
         '''
-        subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
-
+        subprocess.Popen(
+            ["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code],
+            creationflags=subprocess.CREATE_NO_WINDOW
+        )
 
 
 if startup_message_status == 0:
@@ -77,8 +83,10 @@ if startup_message_status == 0:
     $notifier.Show($toast)
 
     '''
-    subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
-
+    subprocess.Popen(
+        ["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code],
+        creationflags=subprocess.CREATE_NO_WINDOW
+    )
 def resource_path(relative_path):
     """Retourne le chemin absolu vers le fichier, fonctionnant dans un environnement compilé ou non."""
     try:
@@ -92,7 +100,7 @@ def get_current_theme():
     ps_code = '''
     (Get-ItemPropertyValue -Path "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" -Name SystemUsesLightTheme)
     '''
-    result = subprocess.run(["powershell", "-Command", ps_code], capture_output=True, text=True)
+    result = subprocess.run(["powershell", "-Command", ps_code], capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
     return "light" if result.stdout.strip() == "1" else "dark"
 
 # Charge l'icône correspondant au thème actuel
@@ -143,9 +151,11 @@ def toggle_theme(icon, item):
     $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("Day/Night switcher")
     $notifier.Show($toast)
     '''
-    subprocess.Popen(["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code])
-    
-    # Mise à jour de l'icône et du menu
+    subprocess.Popen(
+        ["powershell.exe", "-ExecutionPolicy", "Bypass", "-Command", powershell_code],
+        creationflags=subprocess.CREATE_NO_WINDOW
+    )
+    # Laisser un petit délai pour que Windows applique le changement
     time.sleep(2)
     update_icon_and_menu(icon)
 
