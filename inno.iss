@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Day and Night Switcher"
-#define MyAppVersion "v1"
+#define MyAppVersion "v1.1"
 #define MyAppPublisher "Lepplex"
 #define MyAppURL "https://github.com/Lepplex/light-dark-switcher"
 #define MyAppExeName "dnnswitcher.exe"
