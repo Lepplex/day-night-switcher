@@ -4,8 +4,8 @@
 
 Windows lacks of a Light/Dark mode button.<br>So, i created mine !<br>Work on Windows 11 as well as 10.
 
-Compiled with PyInstaller.
-*Some parts are AI generated.*
+*Compiled with PyInstaller.
+Some parts are AI generated.*
 
 
 ## Screenshots
